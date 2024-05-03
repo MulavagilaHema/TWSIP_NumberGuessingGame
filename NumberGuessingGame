@@ -1,0 +1,74 @@
+package numberguessinggamee;
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		        System.out.println("Welcome to the Number Guessing Game!");
+		        System.out.println("Guess the numbers and have fun!");
+		        System.out.println("Choose your difficulty level:");
+		        System.out.println("1. Easy (1-50)");
+		        System.out.println("2. Medium (1-100)");
+		        System.out.println("3. Hard (1-200)");
+		        Scanner scanner = new Scanner(System.in);
+		        int difficultyChoice = scanner.nextInt();
+		        int maxNumber;
+		        switch (difficultyChoice) {
+		            case 1:
+		                maxNumber = 50;
+		                break;
+		            case 2:
+		                maxNumber = 100;
+		                break;
+		            case 3:
+		                maxNumber = 200;
+		                break;
+		            default:
+		                maxNumber = 100;
+		                break;
+		        }
+		        Random random = new Random();
+		        int randomNumber = random.nextInt(maxNumber) + 1;
+
+		        int maxAttempts = 10;
+		        int attempts = 0;
+		        boolean hasGuessedCorrectly = false;
+		        while (!hasGuessedCorrectly && attempts < maxAttempts) {
+		            System.out.println("Attempts left: " + (maxAttempts - attempts));
+		            System.out.println("Guess the number from 1 to " + maxNumber + " or type 'hint' for a hint:");
+		            String input = scanner.next();
+		            if (input.equalsIgnoreCase("hint")) {
+		                if (randomNumber < maxNumber / 2) {
+		                    System.out.println("Hint: The number is higher.");
+		                } else {
+		                    System.out.println("Hint: The number is lower.");
+		                }
+		                continue;
+		            }
+		            int userGuess;
+		            try {
+		                userGuess = Integer.parseInt(input);
+		            } catch (NumberFormatException e) {
+		                System.out.println("Invalid input. Please enter a number or type 'hint' for a hint.");
+		                continue;
+		            }
+		            attempts++;
+
+		            if (userGuess == randomNumber) {
+		                System.out.println("Congratulations! You guessed the number correctly in " + attempts + " attempts.");
+		                hasGuessedCorrectly = true;
+		            } else if (userGuess < randomNumber) {
+		                System.out.println("Too low! Try again.");
+		            } else {
+		                System.out.println("Too high! Try again.");
+		            }
+		        }
+		        if (!hasGuessedCorrectly) {
+		            System.out.println("Sorry, you've run out of attempts. The correct number was " + randomNumber + ".");
+		        }
+
+		        scanner.close();
+		    }
+		}
